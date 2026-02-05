@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize')
-const { sequelize } = require('../config')
+const { sequelize } = require('../util/config')
 
-class Note extends Model {}
+class Note extends Model { }
 
 Note.init({
   id: {
