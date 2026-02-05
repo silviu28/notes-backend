@@ -3,6 +3,11 @@ const { User } = require('../model')
 
 const userRouter = express.Router()
 
+userRouter.get('/', async (_req, res) => {
+  const users = await User.findAll()
+  res.json(users)
+})
+
 userRouter.get('/:id', async (req, res) => {
   const user = await User.findByPk(req.params.id)
   if (user) {
