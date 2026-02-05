@@ -1,13 +1,13 @@
 const { Model, DataTypes } = require('sequelize')
 const { sequelize } = require("../config")
 
-class Blog extends Model {}
+class Blog extends Model { }
 
 Blog.init({
   id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
   },
   author: {
     type: DataTypes.TEXT,
@@ -25,10 +25,10 @@ Blog.init({
     defaultValue: 0,
   },
 }, {
-    sequelize,
-    underscored: true,
-    timestamps: false,
-    modelName: 'blog'
+  sequelize,
+  underscored: true,
+  timestamps: false,
+  modelName: 'blog',
 })
 
 module.exports = Blog
