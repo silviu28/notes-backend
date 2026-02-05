@@ -1,14 +1,19 @@
 const express = require('express')
-const { User } = require('../model')
+const { User, Blog } = require('../model')
 
-const userRouter = express.Router()
+const usersRouter = express.Router()
 
-userRouter.get('/', async (_req, res) => {
-  const users = await User.findAll()
+usersRouter.get('/', async (_req, res) => {
+  const users = await User.findAll({
+    include: {
+      model: Blog,
+      attributes: { exclude: ['userId'], },
+    },
+  })
   res.json(users)
 })
 
-userRouter.get('/:id', async (req, res) => {
+usersRouter.get('/:id', async (req, res) => {
   const user = await User.findByPk(req.params.id)
   if (user) {
     res.json(user)
@@ -17,9 +22,9 @@ userRouter.get('/:id', async (req, res) => {
   }
 })
 
-userRouter.post('/', async (req, res) => {
+usersRouter.post('/', async (req, res) => {
   const user = await User.create(req.body)
   res.json(user)
 })
 
-module.exports = userRouter
+module.exports = usersRouter
