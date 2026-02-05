@@ -18,7 +18,10 @@ loginRouter.post('/', async (req, res) => {
     : false
 
   if (!passwordIsCorrect) {
-    return res.status(401).json({ error: 'Invalid username and/or password' })
+    return res.status(401).json({ error: 'Invalid username and/or password.' })
+  }
+  if (user.disabled) {
+    return res.status(401).json({ error: "Account disabled, contact an admin for more information." })
   }
 
   const token = jwt.sign({
