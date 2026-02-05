@@ -8,6 +8,7 @@ const registerRouter = require('./controller/register')
 const loginRouter = require('./controller/login')
 const authorsRouter = require('./controller/authors')
 const { connectToDatabase } = require('./util/db')
+const readinglistsRouter = require('./controller/readinglists')
 
 const app = express()
 app.use(express.json())
@@ -18,6 +19,7 @@ app.use('/api/users', usersRouter)
 app.use('/api/register', registerRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/authors', authorsRouter)
+app.use('/api/readinglists', readinglistsRouter)
 app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
