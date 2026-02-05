@@ -4,6 +4,7 @@ const notesRouter = require('./controller/notes')
 const blogsRouter = require('./controller/blogs')
 const Blog = require('./model/Blog')
 const Note = require('./model/Note')
+const errorHandler = require('./middleware/errorHandler')
 
 const app = express()
 app.use(express.json())
@@ -13,6 +14,7 @@ Note.sync()
 
 app.use('/api/notes', notesRouter)
 app.use('/api/blogs', blogsRouter)
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
