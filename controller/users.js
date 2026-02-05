@@ -1,5 +1,7 @@
 const express = require('express')
 const { User, Blog } = require('../model')
+const tokenExtractor = require('../middleware/tokenExtractor')
+const adminChecker = require('../middleware/adminChecker')
 
 const usersRouter = express.Router()
 
@@ -25,6 +27,22 @@ usersRouter.get('/:id', async (req, res) => {
 usersRouter.post('/', async (req, res) => {
   const user = await User.create(req.body)
   res.json(user)
+})
+
+// admin-only operation for enabling/disabling user accounts
+usersRouter.post('/:username', tokenExtractor, adminChecker, async (req, res) => {
+  const { username } = req.params
+  const user = await User.findOne({
+    where: { username },
+  })
+
+  if (user) {
+    user.disabled = req.body.disabled
+    await user.save()
+    res.json(user)
+  } else {
+    res.status(404).end()
+  }
 })
 
 module.exports = usersRouter
