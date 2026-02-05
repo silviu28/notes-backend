@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize')
 const { sequelize } = require("../util/db")
+const { isRecent } = require('../validation')
 
 class Blog extends Model { }
 
@@ -31,6 +32,13 @@ Blog.init({
       model: 'users',
       key: 'id',
     },
+  },
+  year: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    validate: {
+      isRecent,
+    }
   }
 }, {
   sequelize,

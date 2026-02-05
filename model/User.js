@@ -32,7 +32,7 @@ User.init({
   },
 }, {
   sequelize,
-  underscored: false,
+  underscored: true,
   timestamps: true,
   modelName: 'user',
 })
