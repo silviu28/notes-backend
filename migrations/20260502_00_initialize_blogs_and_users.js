@@ -40,19 +40,34 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      passwordHash: {
+      password_hash: {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      created_at: {
+        type: DataTypes.DATE,
+      },
+      updated_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      }
     })
     await queryInterface.addColumn('blogs', 'user_id', {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: { model: 'users', key: 'id' },
+      created_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      updated_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
     })
   },
   down: async ({ context: queryInterface }) => {
-    await queryInterface.dropTable('notes')
+    await queryInterface.dropTable('blogs')
     await queryInterface.dropTable('users')
   },
 }

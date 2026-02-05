@@ -14,13 +14,7 @@ const migrationConfig = {
 }
 
 const runMigrations = async () => {
-  const migrator = new Umzug({
-    migrations: {
-      glob: 'migrations/*.js',
-    },
-    storage: new SequelizeStorage({ sequelize, tableName: 'migrations' }),
-    logger: console,
-  })
+  const migrator = new Umzug(migrationConfig)
 
   const migrations = await migrator.up()
   console.log('[INFO] Migrations up to date', {
