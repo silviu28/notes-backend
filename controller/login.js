@@ -24,7 +24,9 @@ loginRouter.post('/', async (req, res) => {
   const token = jwt.sign({
     username,
     id: user.id,
-  }, JWT_SECRET)
+  }, JWT_SECRET, {
+    expiresIn: 3600 * 24 * 31,
+  })
 
   res.status(200).send({
     token,
