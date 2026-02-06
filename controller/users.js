@@ -1,5 +1,5 @@
 const express = require('express')
-const { User, Blog } = require('../model')
+const { User, Blog, ReadingList } = require('../model')
 const tokenExtractor = require('../middleware/tokenExtractor')
 const adminChecker = require('../middleware/adminChecker')
 
@@ -7,10 +7,15 @@ const usersRouter = express.Router()
 
 usersRouter.get('/', async (_req, res) => {
   const users = await User.findAll({
-    include: {
-      model: Blog,
-      attributes: { exclude: ['userId'], },
-    },
+    include: [
+      {
+        model: Blog,
+        as: 'readings',
+        through: {
+          attributes: ['id', 'read'],
+        },
+      },
+    ],
   })
   res.json(users)
 })

@@ -17,3 +17,17 @@ insert into blogs (author, url, title) values (
   'http://my-totally-real-book-that-exists.com',
   'My totally real book that exists'
 );
+
+-- query to retrieve the books in the reading list for each user
+select
+  u.name,
+  u.username,
+  b.id,
+  b.url,
+  b.title,
+  b.author,
+  b.likes,
+  b.year
+  from blogs b
+  join reading_lists r on b.id = r.blog_id
+  join users u on u.id = r.user_id;
