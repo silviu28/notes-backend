@@ -1,0 +1,11 @@
+Session management scenarios:
+
+1. Normal login - user gets a session token, token gets saved to the database
+
+2. Usage with previous session - actions are authorized unless the token is expired or not in the database
+
+3. Usage with previous session but deactivated account - actions aren't authorized, client token isn't found in the database
+
+4. Login on a deactivated account - no token received, no authorization given
+
+5. Logout - all session tokens associated to the user are removed (on frontend the client token also gets removed)

@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const express = require('express')
-const { User } = require('../model')
+const { User, Session } = require('../model')
 
 const JWT_SECRET = process.env.JWT_SECRET
+const JWT_EXPIRATION = process.env.JWT_EXPIRATIOn
 
 const loginRouter = express.Router()
 
@@ -28,7 +29,14 @@ loginRouter.post('/', async (req, res) => {
     username,
     id: user.id,
   }, JWT_SECRET, {
-    expiresIn: 3600 * 24 * 31,
+    expiresIn: JWT_EXPIRATION,
+  })
+
+  // add token to the sessions table
+  await Session.create({
+    token,
+    userId: user.id,
+    creationDate: new Date()
   })
 
   res.status(200).send({

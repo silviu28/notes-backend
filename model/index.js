@@ -1,6 +1,7 @@
 const Blog = require('./Blog')
 const Note = require('./Note')
-const ReadingList = require('./readingList')
+const ReadingList = require('./ReadingList')
+const Session = require('./Session')
 const User = require('./User')
 
 User.hasMany(Blog)
@@ -21,5 +22,14 @@ ReadingList.belongsTo(User)
 Blog.hasMany(ReadingList)
 ReadingList.belongsTo(Blog)
 
+User.hasMany(Session)
+Session.belongsTo(User)
+
 // bundle all models into one export
-module.exports = { Note, Blog, User, ReadingList }
+module.exports = {
+  Note,
+  Blog,
+  User,
+  ReadingList,
+  Session,
+}

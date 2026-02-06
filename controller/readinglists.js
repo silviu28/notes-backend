@@ -40,7 +40,7 @@ readinglistsRouter.put('/:id', tokenExtractor, async (req, res) => {
     return res.status(403).json({ error: 'This reading list entry does not belong to current user.' })
   }
 
-  readingListEntry.read = read === 'true'
+  readingListEntry.read = read
   await readingListEntry.save()
   res.send(readingListEntry)
 })

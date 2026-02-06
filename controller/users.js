@@ -1,5 +1,5 @@
 const express = require('express')
-const { User, Blog, ReadingList } = require('../model')
+const { User, Blog, ReadingList, Session } = require('../model')
 const tokenExtractor = require('../middleware/tokenExtractor')
 const adminChecker = require('../middleware/adminChecker')
 
@@ -62,6 +62,11 @@ usersRouter.post('/:username', tokenExtractor, adminChecker, async (req, res) =>
   if (user) {
     user.disabled = req.body.disabled
     await user.save()
+
+    // also revoke all previous sessions
+    await Session.destroy({
+      where: { userId: user.id }
+    })
     res.json(user)
   } else {
     res.status(404).end()
@@ -69,3 +74,4 @@ usersRouter.post('/:username', tokenExtractor, adminChecker, async (req, res) =>
 })
 
 module.exports = usersRouter
+
