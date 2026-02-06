@@ -21,7 +21,25 @@ usersRouter.get('/', async (_req, res) => {
 })
 
 usersRouter.get('/:id', async (req, res) => {
-  const user = await User.findByPk(req.params.id)
+  let whereClause = {}
+  if (req.query.read) {
+    whereClause = {
+      read: req.query.read === 'true',
+    }
+  }
+
+  const user = await User.findByPk(req.params.id, {
+    include: [
+      {
+        model: Blog,
+        as: 'readings',
+        through: {
+          attributes: ['id', 'read'],
+          where: whereClause,
+        },
+      },
+    ]
+  })
   if (user) {
     res.json(user)
   } else {
